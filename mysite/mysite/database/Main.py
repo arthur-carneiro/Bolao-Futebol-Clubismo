@@ -36,6 +36,10 @@ def get_data(chave,requisicao, planilha):
         cadastro = sheet.sheet1
         return cadastro
     
+    if (planilha == 'Classificação Geral'):
+        classificacao = sheet.sheet1
+        return classificacao
+    
     if (requisicao == 'palpites'):
         sheet1 = sheet.sheet1 
         return sheet1
@@ -49,6 +53,7 @@ def get_data(chave,requisicao, planilha):
         gabarito = sheet.worksheet("Gabarito")
         sheet1 = sheet.sheet1
         return sheet1, gabarito
+
     
     gabarito = sheet.worksheet("Gabarito")
     sheet1 = sheet.sheet1
