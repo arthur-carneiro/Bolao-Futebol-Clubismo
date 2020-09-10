@@ -9,15 +9,22 @@ RODADA = "Rodada 9"
 MES = "Setembro/2020"
 
 # Create your views here.
+#Cria a Página Inicial do site com o estagio atual dos jogos da rodada.
 def index(request):
     content = {}
+    #dicionário a ser utilizado na saída no templante index.html
     gabarito_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json','gabarito', RODADA)
+    #extração dos valores da planilha formulário na aba 'gabarito' para a rodada atual
     resultados_html = return_games(gabarito_sheet.col_values(1), gabarito_sheet.col_values(2))
-    #gabarito = gabarito_sheet.get_all_values()
+    #dataframe representado em html dos jogos em 3 colunas
     
     content['tabela'] = resultados_html
+    #criação da chave 'tabela' que tem o dataframe resultados_html como valor
     content['rodada'] = RODADA
+    #criação da chave 'rodada' que tem a rodada atual como valor
     return render(request, 'index.html',content)
+    #retorno da função index com o request, a pagina que vai receber os valores e o dicionário content
+
 
 def classificacao_rodada(request):
     content = {}
@@ -31,8 +38,7 @@ def classificacao_rodada(request):
     cadastro = cadastro_sheet.get_all_values()
 
     cadastro_dict = {int(d[2]): d[1] for d in cadastro[1:]}
-    #print(palpites)
-    #nome = [[a for a in x if a == x[2]] for x in palpites[1:]]
+    
 
     i = 0
     #for a in gabarito_sheet.col_values(2):
@@ -98,7 +104,41 @@ def classificacao_mes(request):
 
 def classificacao_geral(request):
     content = {}
-    content['rodada'] = "Classificacao Geral"
+    palpites_sheet, gabarito_sheet, classificacao_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', RODADA)
+    df_format = True
+    cadastro_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', "Cadastro")
+    
+    gabarito = gabarito_sheet.get_all_values()
+    palpites = palpites_sheet.get_all_values()
+    cadastro = cadastro_sheet.get_all_values()
+
+    cadastro_dict = {int(d[2]): d[1] for d in cadastro[1:]}
+    
+
+    nomes_dict = Main.get_boletins(gabarito,palpites,cadastro_dict, df_format)
+
+    return_class_cmplt(nomes_dict,classificacao_sheet)
+
+    geral_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', "Classificação Geral")
+
+    classificacao_geral = geral_sheet.get_all_values()
+
+    valores = [[x if x == a[0] else int(x) for x  in a] for a in classificacao_geral[1:]]
+
+    classificacao_geral = DataFrame(valores,columns=['Nome', 'Pontos Totais', '10 pontos', '7 pontos', '5 pontos', '2 pontos', '0 pontos'])
+    classificacao_geral = classificacao_geral.sort_values(by=['Pontos Totais', '10 pontos', '7 pontos', '0 pontos', '5 pontos', '2 pontos'],ascending=[0,0,0,1,0,0])
+    
+    classificacao_geral.index = [i+1 for i in range(0, len(classificacao_geral.values))]
+    
+    classificacao_geral = classificacao_geral.to_html()
+    classificacao_geral = classificacao_geral.replace('<table border="1" class="dataframe">', '<table style="text-align: center; width:100%">')
+    classificacao_geral = classificacao_geral.replace('<tr style="text-align: right;">', '<tr>')
+    classificacao_geral = classificacao_geral.replace('<tbody>', '<tbody  style="text-align: center;">')
+    classificacao_geral = classificacao_geral.replace("\n", "")
+
+    content['rodada'] = "Classificação Geral"
+    content['tabela'] = classificacao_geral
+    
     return render(request, 'classificacao_geral.html',content)
 
 def prox_rodada(request):
