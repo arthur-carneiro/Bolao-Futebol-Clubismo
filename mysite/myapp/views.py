@@ -5,8 +5,8 @@ from mysite.database import Main
 from mysite.database.return_games import return_games
 from mysite.database.return_class_cmplt import return_class_cmplt
 
-RODADA = "Rodada 12"
-MES = "Setembro/2020"
+RODADA = "Rodada 13"
+MES = "Outubro/2020"
 
 # Create your views here.
 #Cria a Página Inicial do site com o estagio atual dos jogos da rodada.
