@@ -1,9 +1,11 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+
 import pandas as pd 
 import numpy as np
 from collections import OrderedDict
 from operator import getitem 
+
 from mysite.database.return_rodada import return_rodada
 #from return_rodada import return_rodada
 from mysite.database.return_class_cmplt import return_class_cmplt
@@ -23,10 +25,10 @@ def get_data(chave,requisicao, planilha):
 
     # Find a workbook by name and open the first sheet
     # Make sure you use the right name here.
-    #sheet = client.open("Cópia de Bolão(Responses)") #>>>Planilha teste
+    #sheet = client.open("Cópia de Bolão(Responses)")
     nome = "Bolão Brasileirão Futebol e Clubismo - " + planilha
     
-    sheet = client.open(nome) #>>>Planilha bundesliga
+    sheet = client.open(nome)
     
     if(planilha == MES):
         classificacao = sheet.sheet1
