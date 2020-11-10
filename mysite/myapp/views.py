@@ -5,7 +5,7 @@ from mysite.database import Main
 from mysite.database.return_games import return_games
 from mysite.database.return_class_cmplt import return_class_cmplt
 
-RODADA = "Rodada 19" 
+RODADA = "Rodada Extra Novembro" 
 MES = "Novembro/2020"
 
 # Create your views here.
@@ -24,7 +24,6 @@ def index(request):
     #criação da chave 'rodada' que tem a rodada atual como valor
     return render(request, 'index.html',content)
     #retorno da função index com o request, a pagina que vai receber os valores e o dicionário content
-
 
 def classificacao_rodada(request):
     content = {}
