@@ -14,7 +14,7 @@ from mysite.database.return_class_cmplt import return_class_cmplt
 #from return_games import return_games
 
 
-MES = "Novembro/2020"
+MES = "Dezembro/2020"
 
 def get_data(chave,requisicao, planilha):
     # use creds to create a client to interact with the Google Drive API
