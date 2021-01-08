@@ -16,8 +16,13 @@ def index(request):
     gabarito_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json','gabarito', RODADA)
     #extração dos valores da planilha formulário na aba 'gabarito' para a rodada atual
     resultados_html = return_games(gabarito_sheet.col_values(1), gabarito_sheet.col_values(2))
+<<<<<<< HEAD
+    #gabarito = gabarito_sheet.get_all_values()
+
+=======
     #dataframe representado em html dos jogos em 3 colunas
     
+>>>>>>> ea9eea41226b90a09832c7505069029f4b7cb6f0
     content['tabela'] = resultados_html
     #criação da chave 'tabela' que tem o dataframe resultados_html como valor
     content['rodada'] = RODADA
@@ -49,7 +54,7 @@ def classificacao_rodada(request):
             return render(request, 'classificacao_rodada.html',content)
         else:
             break
-    
+
     df_format = False
     #content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet)
     #content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet, df_format)
@@ -78,24 +83,24 @@ def classificacao_mes(request):
 
     #classificacao = return_class_cmplt(nomes_dict,classificacao_sheet)
     return_class_cmplt(nomes_dict,classificacao_sheet)
-    
+
     classificacao_mes_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', MES)
-    
+
     valores = classificacao_mes_sheet.get_all_values()
-    
+
     valores = [[x if x == a[0] else int(x) for x  in a] for a in valores[1:]]
 
     classificacao_mes = DataFrame(valores,columns=['Nome', 'Pontos Totais', '10 pontos', '7 pontos', '5 pontos', '2 pontos', '0 pontos'])
     classificacao_mes = classificacao_mes.sort_values(by=['Pontos Totais', '10 pontos', '7 pontos', '0 pontos', '5 pontos', '2 pontos'],ascending=[0,0,0,1,0,0])
-    
+
     classificacao_mes.index = [i+1 for i in range(0, len(classificacao_mes.values))]
-    
+
     classificacao_mes = classificacao_mes.to_html()
     classificacao_mes = classificacao_mes.replace('<table border="1" class="dataframe">', '<table style="text-align: center; width:100%">')
     classificacao_mes = classificacao_mes.replace('<tr style="text-align: right;">', '<tr>')
     classificacao_mes = classificacao_mes.replace('<tbody>', '<tbody  style="text-align: center;">')
     classificacao_mes = classificacao_mes.replace("\n", "")
-    
+
     #content['classificacao'] = return_class_cmplt(nomes_dict,classificacao_sheet)
     content['classificacao'] = classificacao_mes
     content['mes'] = MES
@@ -163,4 +168,4 @@ def regulamento(request):
 def galeria_campeoes(request):
     content = {}
     content['rodada'] = "Galeria de Campeões"
-    return render(request, 'galeria_campeoes.html',content)     
+    return render(request, 'galeria_campeoes.html',content)
