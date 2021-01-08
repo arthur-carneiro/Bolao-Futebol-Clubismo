@@ -5,8 +5,8 @@ from mysite.database import Main
 from mysite.database.return_games import return_games
 from mysite.database.return_class_cmplt import return_class_cmplt
 
-RODADA = "Rodada 26" 
-MES = "Dezembro/2020"
+RODADA = "Rodada 29" 
+MES = "Janeiro/2021"
 
 # Create your views here.
 #Cria a Página Inicial do site com o estagio atual dos jogos da rodada.
