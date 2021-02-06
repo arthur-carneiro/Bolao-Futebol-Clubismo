@@ -5,8 +5,8 @@ from mysite.database import Main
 from mysite.database.return_games import return_games
 from mysite.database.return_class_cmplt import return_class_cmplt
 
-RODADA = "Rodada 32" 
-MES = "Janeiro/2021"
+RODADA = "Rodada 35" 
+MES = "Fevereiro/2021"
 
 # Create your views here.
 #Cria a Página Inicial do site com o estagio atual dos jogos da rodada.
@@ -16,13 +16,12 @@ def index(request):
     gabarito_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json','gabarito', RODADA)
     #extração dos valores da planilha formulário na aba 'gabarito' para a rodada atual
     resultados_html = return_games(gabarito_sheet.col_values(1), gabarito_sheet.col_values(2))
-<<<<<<< HEAD
+
     #gabarito = gabarito_sheet.get_all_values()
 
-=======
+
     #dataframe representado em html dos jogos em 3 colunas
     
->>>>>>> ea9eea41226b90a09832c7505069029f4b7cb6f0
     content['tabela'] = resultados_html
     #criação da chave 'tabela' que tem o dataframe resultados_html como valor
     content['rodada'] = RODADA
