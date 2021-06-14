@@ -30,7 +30,8 @@ urlpatterns = [
     path('regulamento.html', v.regulamento),
     path('rodada_depois.html', v.rodada_depois),
     path('rodada_seguinte.html', v.rodada_seguinte),
-    path('galeria_campeoes.html', v.galeria_campeoes)
+    path('galeria_campeoes.html', v.galeria_campeoes),
+    path('proximarodada.html', v.proximarodada)
 ]
 
 urlpatterns += staticfiles_urlpatterns()
